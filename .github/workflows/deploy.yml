@@ -17,15 +17,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Instalar Dependências
-        run: npm ci
+        run: npm install
 
       - name: Compilar Projeto (Build)
         run: npm run build
 
-      - name: Enviar arquivos compilados para a pasta public_html.new
+      - name: Enviar arquivos para o servidor via SSH
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -33,5 +32,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           ARGS: "-rlgoDzuci --delete"
-          SOURCE: "build/client/" # Ou "dist/", a depender da configuração do React Router / Vite
-          TARGET: "/var/www/vhosts/gaolavanderia.com.br/public_html.new"
+          SOURCE: "build/client/"
+          TARGET: "public_html.new/" # Usando caminho relativo
