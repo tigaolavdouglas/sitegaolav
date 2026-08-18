@@ -32,5 +32,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           ARGS: "-rlgoDzuci --delete"
-          SOURCE: "build/client/"
-          TARGET: "public_html.new/" # Usando caminho relativo
+          SOURCE: "build/client/." # O /.` garante que copia todo o conteúdo (inclusive index.html)
+          TARGET: "public_html/"
